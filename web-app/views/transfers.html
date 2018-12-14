@@ -1,0 +1,77 @@
+<div ng-controller="transfers as vm" class="container">
+        <div class="main-holder">
+            <h1>Transfer amount</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <form name="formValidation">
+                        <div class="form-group">
+                                <label>To</label>
+                                <select ng-model="vm.fund.to">
+                                    <option ng-repeat="user in vm.users">{{user.email}}</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control" name="amount" ng-model="vm.fund.amount" required>
+                        </div>
+                    </form>
+                    <button ng-click="vm.transfer()" class="btn btn-info" >Transfer</button>
+                </div>
+            </div>
+        </div>
+        <div class="container" ng-if="vm.chartData.length">
+            <chart-directive config="bar" data="vm.chartData"></chart-directive>  
+        </div>
+        <div>
+            <div class="container">
+                <h1>Payment Transferred</h1>
+                <table class="table table-striped" ng-if="vm.paymentsTrans.length">
+                    <thead>
+                        <tr>
+                            <th>Transferred to</th>
+                            <th>Amount</th>
+                            <th>Date of transfer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="payment in vm.paymentsTrans">
+                            <td >
+                                {{payment.to.name}} | {{payment.to.email}}
+                            </td>
+                            <td>
+                                {{payment.amount}}
+                            </td>
+                            <td>
+                                {{payment.createdAt | date:'mediumDate'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="!vm.paymentsTrans.length">No data available</div>
+                <h1>Payment Recieved</h1>
+                <div ng-if="!vm.paymentsRec.length">No data available</div>
+                <table class="table table-striped" ng-if="vm.paymentsRec.length">
+                    <thead>
+                        <tr>
+                            <th>Transferred From</th>
+                            <th>Amount</th>
+                            <th>Date of transfer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="payment in vm.paymentsRec">
+                            <td >
+                                {{payment.from.name}} | {{payment.from.email}}
+                            </td>
+                            <td>
+                                {{payment.amount}}
+                            </td>
+                            <td>
+                                {{payment.createdAt | date:'mediumDate'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
